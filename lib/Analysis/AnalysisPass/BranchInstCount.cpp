@@ -14,7 +14,7 @@ STATISTIC(NumGTBranch, "Number of conditional branches whose comparison type is 
 STATISTIC(NumLTBranch, "Number of conditional branches whose comparison type is less than test");
 
 namespace {
-	struct BranchInstCount : public FunctionPass {
+    struct BranchInstCount : public FunctionPass {
 		static char ID; // Pass identification, replacement for typeid
 		BranchInstCount() : FunctionPass(ID) {}
 
@@ -22,46 +22,46 @@ namespace {
 			for (Function::iterator bb = F.begin(), bb_e = F.end(); bb != bb_e; ++bb) {
 				for (BasicBlock::iterator ii = bb->begin(), ii_e = bb->end(); ii != ii_e; ++ii) {
 					BranchInst* branch_inst = dyn_cast<BranchInst>(ii);
-					
+				
 					if(branch_inst && branch_inst->isConditional()) {
 						errs() << "    Conditional: ";
 						branch_inst->print(errs(), true);
 						errs() << "\n";
-						
+					
 						NumCondBranch++;
-						
+					
 						CmpInst* cmp_inst = dyn_cast<CmpInst>(branch_inst->getCondition());
 						if(cmp_inst) {
 							errs() << "\n    Predicate is " << cmp_inst->getPredicateName(cmp_inst->getPredicate());
 							errs() << "\n\n";
 							switch(cmp_inst->getPredicate()) {
-								case CmpInst::ICMP_EQ:
-									NumEqBranch++;
-									break;
-								case CmpInst::ICMP_SGT:
-									NumGTBranch++;
-									break;
-								case CmpInst::ICMP_SLT:
-									NumLTBranch++;
-									break;
-								default:
-									break;
+							case CmpInst::ICMP_EQ:
+								NumEqBranch++;
+								break;
+							case CmpInst::ICMP_SGT:
+								NumGTBranch++;
+								break;
+							case CmpInst::ICMP_SLT:
+								NumLTBranch++;
+								break;
+							default:
+								break;
 							}
 						}
 					}				
 					else if(branch_inst && branch_inst->isUnconditional()) {
-							NumUncondBranch++;
+						NumUncondBranch++;
 
-							errs() << "    Unconditional: ";
-							branch_inst->print(errs(), true);
-							errs() << "\n";
+						errs() << "    Unconditional: ";
+						branch_inst->print(errs(), true);
+						errs() << "\n";
 					}
 				}
 			}
 
 			return false;
-		}
-	};
+		
+    };
 }
 
 char BranchInstCount::ID = 0;
