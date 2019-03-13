@@ -22,8 +22,6 @@
 #include "llvm/IR/Operator.h"
 #include "llvm/IR/Statepoint.h"
 
-#include "AnalysisPass\BranchInstCount.cpp"
-
 using namespace llvm;
 
 static bool isAligned(const Value *Base, const APInt &Offset, unsigned Align,

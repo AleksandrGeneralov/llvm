@@ -1,0 +1,5 @@
+[component_0]
+type = Library
+name = AnalysisPass
+parent = Libraries
+required_libraries = BinaryFormat Core Object ProfileData Support
